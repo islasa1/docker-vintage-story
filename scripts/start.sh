@@ -31,8 +31,8 @@ term_handler() {
     elif [ -f "${DATA_DIR}/VintagestoryServer" ]; then
       killpid="$(pidof VintagestoryServer)"
     fi
-	su $USER -c "screen -S VintageStory -X stuff '/stop^M'" >/dev/null
-	tail --pid=$killpid -f /dev/null
+  su $USER -c "screen -S VintageStory -X stuff '/stop^M'" >/dev/null
+  tail --pid=$killpid -f /dev/null
 }
 
 trap 'kill ${!}; term_handler' SIGTERM
@@ -40,6 +40,6 @@ su ${USER} -c "/opt/scripts/start-server.sh" &
 killpid="$!"
 while true
 do
-	wait $killpid
-	exit 0;
+  wait $killpid
+  exit 0;
 done
