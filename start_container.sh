@@ -17,7 +17,7 @@ port=42420
 name=vintagestory
 while getopts "hd:c:m:p:n:" opt; do
   case ${opt} in
-    c)
+    d)
       serverDir=$OPTARG
     ;;
     c)
