@@ -10,6 +10,8 @@ RUN wget -q -O /tmp/packages-microsoft-prod.deb https://packages.microsoft.com/c
 	rm -rf /var/lib/apt/lists/* /tmp/packages-microsoft-prod.deb
 
 ENV DATA_DIR="/vintagestory"
+ENV CONFIG="/opt/config/serverconfig.jsonc"
+ENV MOD_DIR="/opt/mods"
 ENV VS_CHANNEL="stable"
 ENV VS_VERSION="1.20.3"
 env DISABLE_UPDATES="false"
@@ -26,6 +28,7 @@ RUN mkdir $DATA_DIR && \
 	ulimit -n 2048
 
 ADD /scripts/ /opt/scripts/
+ADD /config/ /opt/config/
 RUN chmod -R 770 /opt/scripts/
 
 #Server Start
