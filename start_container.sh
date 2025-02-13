@@ -5,9 +5,10 @@ help()
   echo "./start_container.sh [options]"
   echo "  -d [path]           Path to place the server"
   echo "  -m [mod dir]        Load mods from this directory"
-  echo "  -c [config]         Load from user server config"
+  echo "  -s [config]         Load from user server config"
   echo "  -p [port]           default 42420        Port to forward, MAKE SURE THIS MATCHES YOUR CONFIG IF PROVIDED"
-  echo "  -n [name]           default vintagestory Name of container to run"
+  echo "  -n [name]           default VintageStory Name of container instance"
+  echo "  -c [name]           default vintagestory Name of container to run"
   echo "  -h                  Print this message"
   echo "-- <docker commands>  Directly pass everything after this to the docker command"
   echo ""
@@ -15,12 +16,13 @@ help()
 }
 port=42420
 name=vintagestory
-while getopts "hd:c:m:p:n:" opt; do
+container=vintagestory
+while getopts "hd:s:m:p:n:c:" opt; do
   case ${opt} in
     d)
       serverDir=$OPTARG
     ;;
-    c)
+    s)
       config=$OPTARG
     ;;
     m)
@@ -30,6 +32,9 @@ while getopts "hd:c:m:p:n:" opt; do
       port=$OPTARG
     ;;
     n)
+      name=$OPTARG
+    ;;
+    c)
       container=$OPTARG
     ;;
     h)  help; exit 0 ;;
@@ -43,6 +48,7 @@ if [ -z $serverDir ]; then
   echo "Server directory required!"
 fi
 
+
 extraOps=
 if [ ! -z $config ]; then
   extraOps="$extraOps --volume ${config}:/opt/config/serverconfig_custom.json --env 'CONFIG=/opt/config/serverconfig_custom.json'"
@@ -51,4 +57,4 @@ if [ ! -z $modDir ]; then
   extraOps="$extraOps --volume ${modDir}:/opt/mods/"
 fi
 
-sudo docker run --name $container -d -p $port:$port --volume $serverDir:/vintagestory ${extraOps} $*
+sudo docker run --name $name -d -p $port:$port --volume $serverDir:/vintagestory ${extraOps} $* $container
