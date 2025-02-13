@@ -1,8 +1,7 @@
 #!/bin/bash
-pwd
 curl -s http://api.vintagestory.at/${VS_CHANNEL}.json > ${DATA_DIR}/${VS_CHANNEL}.json
 DL_URL="$( cat ${DATA_DIR}/${VS_CHANNEL}.json | jq -r '.["'$VS_VERSION'"].linuxserver.urls.local' )"
-DL_FILE=$( basename $DL )
+DL_FILE=$( basename $DL_URL )
 LAT_V="$( cat ${DATA_DIR}/${VS_CHANNEL}.json | jq -r 'keys[]' | sort -V | tail -n 1 )"
 CUR_V="$(find ${DATA_DIR} -name installed-* | cut -d '-' -f2-)"
 NEED_UPDATE="false"
