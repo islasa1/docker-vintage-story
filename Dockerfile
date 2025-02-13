@@ -22,10 +22,10 @@ ENV GID=100
 ENV DATA_PERM=770
 ENV USER="vintagestory"
 
-RUN mkdir $DATA_DIR && \
-	useradd -d $DATA_DIR -s /bin/bash $USER && \
-	chown -R $USER $DATA_DIR && \
-	ulimit -n 2048
+RUN mkdir -p $DATA_DIR
+RUN useradd -d $DATA_DIR -s /bin/bash $USER
+RUN chown -R $USER $DATA_DIR
+RUN ulimit -n 2048
 
 ADD /scripts/ /opt/scripts/
 ADD /config/ /opt/config/
