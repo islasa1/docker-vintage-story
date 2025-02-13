@@ -15,7 +15,7 @@ if [ -z $LAT_V ]; then
   LAT_V=$CUR_V
 fi
 echo "---Version Check---"
-if [ "${DISABLE_UPDATES}" == "true" ]; then
+if [ "${DISABLE_UPDATES}" == "true" ] && [ ! -z $CUR_V ]; then
   echo "---Automatic Updates Disabled!---"
 elif [ -z "$CUR_V" ]; then
   echo "---Vintage Story not found, downloading...---"
